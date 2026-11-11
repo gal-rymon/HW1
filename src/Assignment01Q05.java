@@ -1,7 +1,10 @@
 public class Assignment01Q05 {
     public static int findShortestPath(int[][] m, int i, int j) {
         int[] visited = new int[m[0].length];
-        visited[i] = 1;
+        for (int v=0; v<visited.length; v++){
+            visited[v] = Integer.MAX_VALUE;
+        }
+        visited[i] = 0;
         return helper(m,i,j,visited);
     }
         
@@ -11,13 +14,12 @@ public class Assignment01Q05 {
         
         int min_path = Integer.MAX_VALUE;
         for (int k=0; k<m[i].length; k++){
-            if (m[i][k] == 1 && visited[k] == 0){
-                visited[k] = 1;
+            if (m[i][k] == 1 && visited[i]+1 < visited[k]){
+                visited[k] = visited[i] + 1;
                 int curr_path = 1 + helper(m, k, j, visited);
                 if (curr_path<min_path && curr_path!=0){
                     min_path = curr_path;
                 }
-                visited[k] = 0;
             }
         }
         if (min_path <= m[0].length){return min_path;}
